@@ -1,0 +1,70 @@
+<title>Consumo | Editar</title>
+
+<div class="container-x1 px-4 h-100">
+<form action="/consumo/editarPost" method="POST">
+
+        <div class="col-mb-3">
+            <h4>Editar Consumo</h4>
+        </div>
+
+        <hr>
+
+        <div class="form-row row">
+            <div class="form-group col mb-3">
+                <label for="codigo" class="form-label">Origem</label>
+                <input type="text" maxlength="15" class="form-control" name="id" placeholder="Informar código do equipamento"value={{consumo.origem.id}}
+                   required>
+            </div>
+
+
+            <div class="form-group col mb-3">
+                <label for="nomeEquipamento" claSs="form-label">Nome do Reservatório</label>
+               <textarea class="form-control" name="nome" placeholder="Informe o nome do Reservatório" disabled>{{consumo.origem.nome}}</textarea>
+
+            </div>
+        </div>
+        <div class="form-row row">
+            <div class="form-group col mb-3">
+                <label for="ordemInterna" class="form-label">Destino</label>
+                <input type="text" class="form-control" name="codigoSap" placeholder="Informe o Codigo SAP"value={{consumo.destino.codigoSap}}>
+            </div>
+            <div class="form-group col mb-3">
+                <label for="centroCusto" class="form-label">Centro de Custo</label>
+               <textarea class="form-control" name="nomeEquipamento" placeholder="Informe o nome do equipamento" disabled>{{consumo.destino.nomeEquipamento}}</textarea>
+
+            </div>
+
+        </div>
+
+        <div class="form-row row">
+
+            <div class="form-group col mb-3">
+                <label for="combustivel" class="form-label"required>Combustível *</label>
+
+                <select class="form-select" name="combustivel" value={{consumo.origem.combustivel.nome}}required>
+                    <option>{{consumo.origem.combustivel.nome}}</option>
+                    <option>GASOLINA</option>
+                    <option>DIESEL</option>
+                    <option>GLP</option>
+                </select >
+            </div>
+            <div class="form-group col mb-3 ">
+                <label for="capacidade" class="form-label">Quantidade *</label>
+                <input type="number" class="form-control" name="quantidade" placeholder="Apenas números" value={{consumo.quantidade}}>
+            </div>
+            <input type="hidden" name="dataHoraSaida" value={{consumo.dataHoraSaida}}>
+            <input type="hidden" name="consumoId" value={{consumo.id}}>
+
+
+           
+
+        </div>
+        <center class="mt-3">
+            <button type="submit" class="btn btn-success"><i class="bi bi-check-circle-fill"></i>
+                Salvar</button>
+            <a href="/consumo/maquinas" class="btn btn-danger"><i class="bi bi-x-circle-fill"></i> Cancelar</a>
+        </center>
+
+    </form>
+</div>
+                    

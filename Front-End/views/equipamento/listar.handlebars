@@ -1,0 +1,158 @@
+<title>Equipamentos | Consulta</title>
+<div class="container-xl">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h4>Equipamentos Cadastrados</h4>
+                    </div>
+                    <div class="col-sm-7">
+                        <a href="/equipamento/criar" class="btn btn-success" name = "novo">
+                            <i class="bi bi-plus-circle-fill"></i>
+                            <span>Novo</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr class="dropdown-divider">
+            <table id="tabela" class="table table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Código</th>
+                        <th>Equipamento</th>
+                        <th>Combustivel</th>
+                        <th>Capacidade</th>
+                        <th>Centro de Custo</th>
+                        <th>Ordem Interna</th>
+                        <th>Reservatório</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each equipamentos}}
+                    <tr>
+                        <td></td>
+                    
+                       <td>{{this.codigoSap}}</td>
+                        <td>{{this.nomeEquipamento}}</td>
+                        <td>{{this.combustivel.nome}}</td>
+                        <td>{{this.capacidade}}</td>
+                        <td>{{this.centroCusto}}</td>
+                        <td>{{this.ordemInterna}}</td>
+
+                        <td>{{this.volumeTanque}}</td>
+                        <td>
+                            <!-- <img src= "/imagens/1.png">--> 
+                            <span class="actions">
+                                <a href="/equipamento/editar/{{this.codigoSap}}" data-title="Editar"><i
+                                        class="bi bi-pencil-fill" id="lapis"></i></a>
+
+                                <form action="/equipamento/desativar" method="POST">
+
+                                    <input type="hidden" id="codigo" name="codigoSap" value="{{this.codigoSap}}">
+
+
+                                   <button type="button" data-placement="top" data-toggle="modal" id="botaoExcluir"
+                                    data-target="#modal" data-title="Excluir" onClick="atualizarForm({{this.codigoSap}})">
+                                    <i class="bi bi-trash3-fill" id="lixeira"></i>
+                                </button>
+                                
+                                   
+                                </form>
+                                <form action="/equipamento/codigo/{{this.codigoSap}}" method="GET">
+                                <button type="submit" data-placement="top" class=" bi-download"
+                                    data-target="#modal" data-title="Download" >
+                                </form>
+                                <!-- 
+  <a href="http://localhost:3000/equipamento/codigo/{{this.codigoSap}}" download = "{{this.codigoSap}}" data-title="Download"
+                                        class=" bi-download" id="download"></a>
+                                -->
+
+                                  
+
+                                </form>
+                            </span>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Confirmação</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Deseja mesmo excluir este cadastro?<br>
+                Esta alteração irá apagar o registro deste Equipamento.
+            </div>
+            <div class="modal-footer">
+                <form action="" method="POST" id="formExcluir">
+                    <input type="hidden" name="id" value="" id="idItem">
+
+                    <button type="submit" class="btn btn-danger">Excluir</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--Js do datatable com exportações-->
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#tabela').DataTable({
+
+            "language": {
+                "url": "/cdn/pt-BR.json",
+            },
+            dom: '<fB<t>lp>',
+            buttons: [
+                {
+                    extend: 'collection',
+                    text: 'Exportar',
+                    buttons: ['pdf', 'print'],
+                }
+            ],
+            columnDefs: [
+                {
+                    targets: 3,
+                    //render: $.fn.dataTable.render.number('.', ',', 2, ''),  formatar exibição de dados na tela
+                    className: "dt-center",
+                },
+                {
+                    targets: 4,
+                    className: "dt-center",
+                }
+            ],
+            order: [[0, 'desc']],
+
+        });
+
+    });
+
+    function atualizarForm(id = "") {
+        document.getElementById("formExcluir").action = "/equipamento/desativar"
+        document.getElementById("idItem").value = id
+    }
+</script>

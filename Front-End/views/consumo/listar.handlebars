@@ -1,0 +1,277 @@
+<title>Consumo | Consulta</title>
+<div class="container-xl">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <h4>Consumo de Combustiveis</h4>
+                    </div>
+                   
+                </div>
+            </div>
+            <hr class="dropdown-divider">
+            <form id="form2" action="/consumo/criarPost" method="POST" onsubmit=Mudarestado()>
+
+                <div class="form-row row">
+
+                    <div class="form-group col mb-2">
+                        <label for="dataInicio" class="form-label">Data Inicio</label>
+                       <input type="date" maxlength="20" class="form-control" name="dataInicio"
+  onchange="updateInputInicio(event)" value="{{dataInicio}}" placeholder="Informar a matricula do Abastecedor" required>
+
+                    </div>
+                    <div class="form-group col mb-3">
+                        <label for="dataFim" class="form-label">Data Fim</label>
+                        <input type="date" maxlength="20" class="form-control" name="dataFim" onchange="updateInputFim(event)" value="{{dataFim}}"
+                            placeholder="Informar a matricula do Abastecedor">
+                    </div>
+
+                    <input type="hidden" id="valorCombustivel" name="valorCombustivel">
+
+
+                    <div class="form-group col mb-3">
+                        <label for="combustivel" class="form-label">Combustível *</label>
+
+                        <select class="form-select" id="combustivel" required>
+                            <option>{{combustivel}}</option>
+                            <option>GASOLINA</option>
+                            <option>DIESEL</option>
+                            <option>GLP</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group col mb-8">
+                        <center class="mt-3">
+                            <button type="submit" class="btn btn-primary"><i class="bi bi-check-circle-fill"
+                                    name="buscar"></i>
+                                Buscar</button>
+                        </center>
+
+                    </div>
+                </div>
+            </form>
+            <form id="form1" action="/consumo/consumoDownload" method="POST"style="width:100%;  display:none;">
+                <input type="hidden" id="valorIni" name="valorIni"value="{{dataInicio}}">
+                <input type="hidden" id="valorFim" name="valorFim"value="{{dataFim}}">
+                <div class="col-sm-7">
+                    <button type="submit" data-placement="top" class=" bi-download" data-target="#modal"
+                        data-title="Download">
+                        Download
+                    </button>
+                </div>
+            </form>
+        </div>
+
+<table id="tabelaDiesel" class="table table-striped" style="width:100%; display:none;">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Codigo</th>
+                    <th>Ordem Interna</th>
+                    <th>Centro de Custo</th>
+                    <th>Equipamento</th>
+                    <th>Quantidade</th>
+                    <th>Data Saida</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each objetoRetorno}}
+                <tr>
+                    <td></td>
+                    <td>{{this.codigoSap}}</td>
+                    <td>{{this.ordemInterna}}</td>
+                    <td>{{this.centroCusto}}</td>
+                    <td>{{this.nomeEquipamento}}</td>
+                    <td>{{this.quantidade}}</td>
+                    <td>{{this.dataHoraSaidaFormatada}}</td>
+
+                  
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+<table id="tabelaGlp" class="table table-striped" style="width:100%; display:none;">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Centro de Custo</th>
+                    <th>Quantidade</th>
+                    <th>Porcentagem</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {{#each objetoRetorno}}
+                <tr>
+                    <td></td>
+                    <td>{{this.centroCusto}}</td>
+                    <td>{{this.quantidade}}</td>
+                    <td>{{this.porcentagem}}</td>
+
+                   
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Confirmação</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Deseja mesmo excluir este cadastro?<br>
+                Esta alteração irá apagar o registro deste Equipamento.
+            </div>
+            <div class="modal-footer">
+                <form action="" method="POST" id="formExcluir">
+                    <input type="hidden" name="id" value="" id="idItem">
+
+                    <button type="submit" class="btn btn-danger">Excluir</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--Js do datatable com exportações-->
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+
+<script>
+    window.onload = function () {
+        document.getElementById("tabelaGlp").style.display = 'none';
+        document.getElementById("tabelaDiesel").style.display = 'none';
+        document.getElementById("form1").style.display = 'none';
+
+        
+        Mudarestado();
+        // Sua função aqui
+
+    };
+</script>
+<script>
+    $(document).ready(function () {
+        $('#tabela').DataTable({
+
+            "language": {
+                "url": "/cdn/pt-BR.json",
+            },
+            dom: '<fB<t>lp>',
+            buttons: [
+                {
+                    extend: 'collection',
+                    text: 'Exportar',
+                    buttons: ['pdf', 'print'],
+                }
+            ],
+            columnDefs: [
+                {
+                    targets: 3,
+                    //render: $.fn.dataTable.render.number('.', ',', 2, ''),  formatar exibição de dados na tela
+                    className: "dt-center",
+                },
+                {
+                    targets: 4,
+                    className: "dt-center",
+                }
+            ],
+            order: [[0, 'desc']],
+
+        });
+
+    });
+
+    function atualizarForm(id = "") {
+        document.getElementById("formExcluir").action = "/equipamento/desativar"
+        document.getElementById("idItem").value = id
+    }
+</script>
+<script>
+    function Mudarestado() {
+        var display = document.getElementById("tabelaGlp").style.display;
+        var combustivel1 = document.getElementById("combustivel");
+        var opcaoTexto = combustivel1.options[combustivel1.selectedIndex].text;
+
+        if (opcaoTexto.toString() == "GLP") {
+            console.log("glp")
+
+            document.getElementById("tabelaGlp").style.display = 'block';
+            document.getElementById("tabelaDiesel").style.display = 'none';
+            document.getElementById("form1").style.display = 'none';
+
+
+        }
+        else if (opcaoTexto.toString() == "DIESEL") {
+
+            document.getElementById("tabelaGlp").style.display = 'none';
+            document.getElementById("tabelaDiesel").style.display = 'block';
+            document.getElementById("form1").style.display = 'block';
+        } else {
+            console.log("gasolina")
+            document.getElementById("tabelaGlp").style.display = 'none';
+            document.getElementById("tabelaDiesel").style.display = 'none';
+            document.getElementById("form1").style.display = 'none';
+        }
+        document.getElementById("valorCombustivel").value = opcaoTexto
+        var valorIni = document.getElementById("valorIni")
+        var dataInicio = document.getElementById("dataInicio")
+        var valorFim = document.getElementById("valorFim")
+        var dataFim = document.getElementById("dataFim")
+        valorIni.value = dataInicio.value
+        valorFim.value = dataFim.value
+
+
+    }
+</script>
+<script>
+    function valorCombustivel() {
+
+        var combustivel1 = document.getElementById("combustivel");
+        var opcaoTexto = combustivel1.options[combustivel1.selectedIndex].text;
+
+    }
+
+</script>
+<script>
+    function updateInputInicio(event) {
+        const dataInicioInput = event.target;
+        const valorIniInput = document.getElementById('valorIni');
+        valorIniInput.value = dataInicioInput.value;   
+    }
+    </script>
+<script>
+    function updateInputFim(event) {
+       
+        
+        const dataFimInput = event.target;
+        const valorFimInput = document.getElementById('valorFim');
+        valorFimInput.value = dataFimInput.value;
+    
+    }
+</script>
+<script>
+   const dataInicioInput = document.getElementById('dataInicioInput');
+const dataInicio = dataInicioInput.getAttribute('data-inicio');
+dataInicioInput.value = {{dataInicio}};
+
+</script>

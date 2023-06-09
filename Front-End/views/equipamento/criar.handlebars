@@ -1,0 +1,68 @@
+<title>Equipamento | Cadastro</title>
+
+<div class="container-x1 px-4 h-100">
+
+  <form action="/equipamento/criarPost" method="POST">
+    <input type="hidden" name="token" value="{{token}}">
+        <div class="col-mb-3">
+            <h4>Novo Equipamento</h4>
+        </div>
+
+        <hr>
+
+        <div class="form-row row">
+            <div class="form-group col mb-3">
+                <label for="codigo" class="form-label">Código</label>
+                <input type="text" maxlength="15" class="form-control" name="codigoSap" placeholder="Informar código do equipamento"
+                    required>
+            </div>
+
+
+            <div class="form-group col mb-3">
+                <label for="nomeEquipamento" claSs="form-label">Equipamento</label>
+                <textarea  class="form-control" name="nomeEquipamento"
+                    placeholder="Informe o nome do equipamento" ></textarea>
+            </div>
+        </div>
+        <div class="form-row row">
+            <div class="form-group col mb-3">
+                <label for="ordemInterna" class="form-label">Ordem Interna</label>
+                <input type="text" class="form-control" name="ordemInterna" placeholder="Informe a Ordem Interna">
+            </div>
+            <div class="form-group col mb-3">
+                <label for="centroCusto" class="form-label">Centro de Custo</label>
+                <input type="text" class="form-control" name="centroCusto" placeholder="Informe o Centro de Custo" >
+
+            </div>
+
+        </div>
+
+        <div class="form-row row">
+
+            <div class="form-group col mb-3">
+                <label for="combustivel" class="form-label"required>Combustível *</label>
+
+                <select class="form-select" name="combustivel"required>
+                    <option>GASOLINA</option>
+                    <option>DIESEL</option>
+                    <option>GLP</option>
+                </select >
+            </div>
+            <div class="form-group col mb-3 ">
+                <label for="capacidade" class="form-label">Capacidade Tanque *</label>
+                <input type="number" class="form-control" name="capacidade" placeholder="Apenas números">
+            </div>
+             <div class="form-group col mb-3 ">
+                <label for="volumeTanque" class="form-label">Volume Tanque *</label>
+                <input type="number" class="form-control" name="volumeTanque" placeholder="Apenas números" >
+            </div>
+
+        </div>
+        <center class="mt-3">
+            <button type="submit" class="btn btn-success"><i class="bi bi-check-circle-fill" name = "salvar"></i>
+                Salvar</button>
+            <a href="/equipamento" class="btn btn-danger"><i class="bi bi-x-circle-fill"></i> Cancelar</a>
+        </center>
+
+    </form>
+</div>

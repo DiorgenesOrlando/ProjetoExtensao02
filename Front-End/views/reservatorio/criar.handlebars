@@ -1,0 +1,54 @@
+<title>Reservatório | Adicionar</title>
+
+<div class="container-x1 px-4 h-100">
+<form action="/reservatorio/criarPost" method="POST">
+
+        <div class="col-mb-3">
+            <h4>Adicionar Reservatório</h4>
+        </div>
+
+        <hr>
+
+        <div class="form-row row">
+
+
+            <div class="form-group col mb-3">
+                <label for="nomeEquipamento" claSs="form-label">Reservatório</label>
+                <textarea  class="form-control" name="nome"
+                    placeholder="Informe o nome do reservatorio" >{{reservatorio.nome}}</textarea>
+            </div>
+            <!--
+              <div class="form-group col mb-3">
+                <label for="ordemInterna" class="form-label">Porcentagem</label>
+                <input type="text" class="form-control" name="porcentagem" placeholder="Informe a porcentagem"value={{reservatorio.porcentagem}}>
+            </div> -->
+        </div>
+        <div class="form-row row">
+          
+            <div class="form-group col mb-3">
+                <label for="centroCusto" class="form-label">Volume</label>
+                <input type="text" class="form-control" name="volume" placeholder="Informe o volume" value={{reservatorio.volume}}>
+
+            </div>
+             <div class="form-group col mb-3">
+                <label for="combustivel" class="form-label"required>Combustível *</label>
+
+                <select class="form-select" name="combustivel" value={{reservatorio.combustivel.nome}} disabled>
+                    <option>{{reservatorio.combustivel.nome}}</option>
+                    <option>GASOLINA</option>
+                    <option>DIESEL</option>
+                    <option>GLP</option>
+                </select >
+            </div>
+
+        </div>
+
+        
+        <center class="mt-3">
+            <button type="submit" class="btn btn-success"><i class="bi bi-check-circle-fill"></i>
+                Salvar</button>
+            <a href="/reservatorio" class="btn btn-danger"><i class="bi bi-x-circle-fill"></i> Cancelar</a>
+        </center>
+
+    </form>
+</div>
