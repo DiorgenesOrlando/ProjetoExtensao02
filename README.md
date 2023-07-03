@@ -5,4 +5,4 @@ O objetivo do projeto é permitir a rastreabilidade no consumo de combustiveis p
 O sistema gera um QR Code para cada equipamento cadastrado, e quando ele é abastecido, o abastecedor le este QR Code e informa a quantidade abastecida.
 
 ## Exemplo de Histórico
-!.[web1].https://github.com/DiorgenesOrlando/ProjetoExtensao02/blob/main/assets/exemplo_historico_consumo.png
+![histórico_1](https://github.com/DiorgenesOrlando/ProjetoExtensao02/blob/main/assets/exemplo_historico_consumo.png)
