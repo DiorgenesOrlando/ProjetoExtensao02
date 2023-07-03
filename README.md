@@ -9,3 +9,23 @@ O sistema gera um QR Code para cada equipamento cadastrado, e quando ele é abas
 Nesta tela podemos ver informações como ORIGEM DO COMBUSTIVEL, DESTINO, QUANTIDADE E DATA E HORA do abastecimento, na opção Download, é possivel baixar estes dados
 em formato .XLS (Excel).
 
+# Tecnologias Utilizadas
+
+## Back End
+  - Java
+  - Spring Web / Spring MVC
+  - JPA / Spring Data JPA
+  - Maven
+## Front End
+-HTML / CSS / JS / TS
+- Bootstap
+- Node.js
+- Express
+## Mobile
+- Kotlin
+- JetPack Compose
+- Retrofit e Moshi
+
+
+ 
+    
